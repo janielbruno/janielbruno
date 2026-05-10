@@ -89,7 +89,7 @@
             font-size: 1.15rem;
             line-height: 1.8;
             color: var(--text-muted);
-            margin-left: auto; /* Joga para a direita no desktop */
+            margin-left: auto;
             position: relative;
             z-index: 2;
         }
@@ -113,8 +113,8 @@
             margin-bottom: 8rem;
             align-items: center;
         }
-        .work-block:nth-child(even) { direction: rtl; } /* Inverte a ordem nos pares */
-        .work-block:nth-child(even) > * { direction: ltr; } /* Restaura direção do texto */
+        .work-block:nth-child(even) { direction: rtl; }
+        .work-block:nth-child(even) > * { direction: ltr; }
 
         .work-visual {
             aspect-ratio: 4/5;
@@ -124,12 +124,27 @@
             display: flex; justify-content: center; align-items: center;
             overflow: hidden;
         }
-        /* Padrão visual abstrato para os livros/textos */
         .work-visual::before {
             content: ''; position: absolute; inset: 20px;
             border: 1px dashed var(--text-dim);
+            z-index: 1;
         }
-        .visual-icon { font-size: 4rem; color: var(--accent-dim); }
+        
+        /* NOVO: Estilo para a Imagem do Livro */
+        .work-image {
+            max-width: 70%;
+            max-height: 75%;
+            object-fit: contain;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.5s ease;
+        }
+        .work-visual:hover .work-image {
+            transform: scale(1.05) translateY(-5px);
+        }
+        
+        .visual-icon { font-size: 4rem; color: var(--accent-dim); position: relative; z-index: 2; }
 
         .work-content { padding: 2rem 0; }
         .w-category {
@@ -144,12 +159,54 @@
             font-size: 1rem; line-height: 1.8; color: var(--text-muted); font-weight: 300;
             margin-bottom: 2rem;
         }
-        .w-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        .w-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 2rem; }
         .w-tag {
             font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em;
             padding: 6px 12px; border: 1px solid var(--text-border); border-radius: 20px;
             color: var(--text); text-transform: uppercase;
         }
+
+        /* NOVO: Botão de Ação (PDF / Links Especiais) */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .action-btn:hover {
+            background: var(--accent-dim);
+            transform: translateY(-2px);
+        }
+
+        /* NOVO: Lista de links Inbound/Copy */
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .content-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--text);
+            transition: all 0.3s;
+            padding-bottom: 4px;
+            border-bottom: 1px solid transparent;
+            width: fit-content;
+        }
+        .content-link i { color: var(--accent); font-size: 0.8rem; transition: transform 0.3s; }
+        .content-link:hover { color: var(--accent); border-bottom-color: var(--accent-dim); }
+        .content-link:hover i { transform: translateX(5px); }
 
         /* MANIFESTO / CONCLUSÃO */
         .manifesto {
@@ -184,8 +241,9 @@
             .hero-desc { margin-left: 0; }
             
             .work-block { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 5rem; }
-            .work-block:nth-child(even) { direction: ltr; } /* Remove inversão no mobile */
+            .work-block:nth-child(even) { direction: ltr; }
             .work-visual { aspect-ratio: 16/9; }
+            .work-image { max-height: 90%; } /* Ajuste pro livro ficar melhor no celular */
             .w-title { font-size: 2rem; }
         }
     </style>
@@ -202,7 +260,9 @@
         <div class="hero-label">Obras & Escritos</div>
         <h1>Narrativas<br><span>& Palavras</span></h1>
         <div class="hero-desc">
-            Acredito que o melhor Inbound Marketing nasce da sensibilidade. A poesia ensina a precisão e a economia das palavras. A narrativa ensina a jornada do herói. <strong>Aplicar a arte ao Neuromarketing transforma tráfego orgânico em conexão real.</strong>
+           Escrever e refletir sempre foram pontos fortes durante toda minha jornada, e não há como não citá-los como uma parte de mim nesse portfólio profissional. Aqui, mostro além de textos comerciais, mas sim poesias e narrativas que criei e que fazem parte desse meu universo. 
+           <br><br>
+           "A poesia ensina a precisão e a economia das palavras. A narrativa ensina a jornada do herói."
         </div>
     </header>
 
@@ -210,12 +270,12 @@
         
         <div class="work-block">
             <div class="work-visual">
-                <i class="fa-solid fa-feather-pointed visual-icon"></i>
+                <img src="livro-poemas.png" alt="Capa do Livro de Poemas" class="work-image">
             </div>
             <div class="work-content">
                 <div class="w-category">Publicação Autoral</div>
                 <h2 class="w-title">Livro de Poemas</h2>
-                <p class="w-text">Uma exploração estética sobre sentimentos, tempo e a condição humana. Escrever poesia exige ritmo, impacto emocional em poucas linhas e escolha cirúrgica de palavras — as mesmas habilidades necessárias para criar um *copy* de alta conversão que prende a atenção do leitor logo no primeiro segundo.</p>
+                <p class="w-text">Escrever "Quando um coração se quebra onde se coloca seus pedaços?" foi uma exploração sobre sentimentos e autoconhecimento. Escrever poesia exige ritmo, impacto emocional em poucas linhas e escolha cirúrgica de palavras — as mesmas habilidades necessárias para criar um texto de alta conversão que prende a atenção do leitor logo no primeiro segundo.</p>
                 <div class="w-tags">
                     <span class="w-tag">Poesia</span>
                     <span class="w-tag">Publicado</span>
@@ -230,13 +290,16 @@
             </div>
             <div class="work-content">
                 <div class="w-category">Projeto Literário</div>
-                <h2 class="w-title">Manuscrito de Narrativa</h2>
-                <p class="w-text">Um romance inédito focado em construção de mundos (*worldbuilding*) e arcos de personagens profundos. Desenvolver uma narrativa longa exige mapeamento mental, estruturação de capítulos e controle de fluxo da atenção — o mesmo pensamento sistêmico aplicado no planejamento de um funil de conteúdo complexo para SEO.</p>
+                <h2 class="w-title">A garota que não sabia chorar</h2>
+                <p class="w-text">Uma história que conta sobre autodescoberta, amizades com arcos de personagens profundos e revisitar a própria vida do leitor ao questionar a maneira que agimos e como agimos. Desenvolver uma narrativa longa exige mapeamento mental, estruturação de capítulos e controle de fluxo da atenção — o mesmo pensamento sistêmico aplicado no planejamento de um funil de conteúdo complexo para SEO.</p>
                 <div class="w-tags">
                     <span class="w-tag">Ficção</span>
                     <span class="w-tag">Inédito</span>
                     <span class="w-tag">Storytelling</span>
                 </div>
+                <a href="A Garota Que Não Sabia Chorar- 2 primeiros.pdf" target="_blank" class="action-btn">
+                    <i class="fa-solid fa-file-pdf"></i> Ler primeiros capítulos
+                </a>
             </div>
         </div>
 
@@ -247,12 +310,19 @@
             <div class="work-content">
                 <div class="w-category">Atuação Profissional</div>
                 <h2 class="w-title">Copywriting & Inbound</h2>
-                <p class="w-text">É aqui que a arte encontra o negócio. Utilizo a técnica literária somada aos princípios de neuromarketing para criar Landing Pages, artigos de performance e campanhas de email. Textos que não apenas ranqueiam no Google, mas que dialogam com a dor do usuário, gerando retenção e reduzindo drasticamente a taxa de rejeição.</p>
+                <p class="w-text">Agora, sendo mais direto, aqui são artigos, e-books, e-mails, landing pages e outros conteúdos de inbound que utilizei técnicas de marketing somadas a minha experiência literária. Textos que não apenas ranqueiam no Google, mas que dialogam com a dor do usuário, gerando retenção e redução da taxa de rejeição.</p>
                 <div class="w-tags">
                     <span class="w-tag">Inbound Marketing</span>
-                    <span class="w-tag">Neuromarketing</span>
-                    <span class="w-tag">CRO</span>
+                    <span class="w-tag">Copywriting</span>
+                    <span class="w-tag">Redação SEO</span>
                 </div>
+                
+                <div class="links-list">
+                    <a href="LINK_AQUI" target="_blank" class="content-link"><i class="fa-solid fa-arrow-right"></i> Artigo SEO Técnico e Arquitetura</a>
+                    <a href="LINK_AQUI" target="_blank" class="content-link"><i class="fa-solid fa-arrow-right"></i> E-book: Jornada de Compra no Inbound</a>
+                    <a href="LINK_AQUI" target="_blank" class="content-link"><i class="fa-solid fa-arrow-right"></i> Landing Page B2B Magis5</a>
+                </div>
+
             </div>
         </div>
 
