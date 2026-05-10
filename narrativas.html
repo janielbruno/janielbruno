@@ -130,7 +130,6 @@
             z-index: 1;
         }
         
-        /* NOVO: Estilo para a Imagem do Livro */
         .work-image {
             max-width: 70%;
             max-height: 75%;
@@ -157,7 +156,7 @@
         }
         .w-text {
             font-size: 1rem; line-height: 1.8; color: var(--text-muted); font-weight: 300;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         .w-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 2rem; }
         .w-tag {
@@ -166,7 +165,30 @@
             color: var(--text); text-transform: uppercase;
         }
 
-        /* NOVO: Botão de Ação (PDF / Links Especiais) */
+        /* NOVO: Estilo para a citação do poema */
+        .poem-quote {
+            margin: 2rem 0;
+            padding: 1.5rem 1.5rem 1.5rem 2rem;
+            background: rgba(242, 200, 121, 0.03);
+            border-left: 2px solid var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .poem-title {
+            display: block;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-style: normal;
+        }
+
+        /* Botões de Ação */
         .action-btn {
             display: inline-flex;
             align-items: center;
@@ -187,22 +209,12 @@
             transform: translateY(-2px);
         }
 
-        /* NOVO: Lista de links Inbound/Copy */
-        .links-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        /* Lista de links */
+        .links-list { display: flex; flex-direction: column; gap: 12px; }
         .content-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-            color: var(--text);
-            transition: all 0.3s;
-            padding-bottom: 4px;
-            border-bottom: 1px solid transparent;
-            width: fit-content;
+            display: inline-flex; align-items: center; gap: 12px;
+            font-size: 0.95rem; color: var(--text); transition: all 0.3s;
+            padding-bottom: 4px; border-bottom: 1px solid transparent; width: fit-content;
         }
         .content-link i { color: var(--accent); font-size: 0.8rem; transition: transform 0.3s; }
         .content-link:hover { color: var(--accent); border-bottom-color: var(--accent-dim); }
@@ -243,8 +255,10 @@
             .work-block { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 5rem; }
             .work-block:nth-child(even) { direction: ltr; }
             .work-visual { aspect-ratio: 16/9; }
-            .work-image { max-height: 90%; } /* Ajuste pro livro ficar melhor no celular */
+            .work-image { max-height: 90%; } 
             .w-title { font-size: 2rem; }
+            
+            .poem-quote { padding: 1.2rem; font-size: 1rem; }
         }
     </style>
 </head>
@@ -270,23 +284,47 @@
         
         <div class="work-block">
             <div class="work-visual">
-                <img src="livro-poemas.png" alt="Capa do Livro de Poemas" class="work-image">
+                <img src="capa-livro-poemas.jpg" alt="Capa do Livro de Poemas" class="work-image">
             </div>
             <div class="work-content">
                 <div class="w-category">Publicação Autoral</div>
                 <h2 class="w-title">Livro de Poemas</h2>
                 <p class="w-text">Escrever "Quando um coração se quebra onde se coloca seus pedaços?" foi uma exploração sobre sentimentos e autoconhecimento. Escrever poesia exige ritmo, impacto emocional em poucas linhas e escolha cirúrgica de palavras — as mesmas habilidades necessárias para criar um texto de alta conversão que prende a atenção do leitor logo no primeiro segundo.</p>
+                
+                <div class="poem-quote">
+                    <span class="poem-title">Depois da chuva</span>
+                    Olhai os seus olhos<br>
+                    Estão marejados<br>
+                    Olhai o céu<br>
+                    Está acinzentado<br><br>
+                    Os dois estão prestes a lacrimejar<br>
+                    Independente de ser natural ou não<br>
+                    As nuvens irão passar<br>
+                    e um novo dia irá começar<br><br>
+                    Nada é um fim, tudo é um começo<br>
+                    E nesse vai e vem, você um dia perceberá<br>
+                    Que aquilo era apenas água...<br>
+                    Água feita para purificar<br><br>
+                    Talvez o corpo, a mente ou a alma<br>
+                    Mas quem se importa?<br>
+                    Afinal, depois da chuva, vem o arco-íris
+                </div>
+
                 <div class="w-tags">
                     <span class="w-tag">Poesia</span>
                     <span class="w-tag">Publicado</span>
                     <span class="w-tag">Linguagem</span>
                 </div>
+                
+                <a href="https://www.amazon.com.br/Quando-cora%C3%A7%C3%A3o-quebra-coloca-peda%C3%A7os-ebook/dp/B0CHZ1X1J8" target="_blank" class="action-btn" style="margin-top: 1rem;">
+                    <i class="fa-brands fa-amazon"></i> Disponível na Amazon
+                </a>
             </div>
         </div>
 
         <div class="work-block">
             <div class="work-visual">
-                <img src="00agarota.jpg" alt="Capa do Livro Narrativo" class="work-image">
+                <i class="fa-solid fa-book-open-reader visual-icon"></i>
             </div>
             <div class="work-content">
                 <div class="w-category">Projeto Literário</div>
@@ -297,8 +335,8 @@
                     <span class="w-tag">Inédito</span>
                     <span class="w-tag">Storytelling</span>
                 </div>
-                <a href="A Garota Que Não Sabia Chorar- 2 primeiros.pdf" target="_blank" class="action-btn">
-                    <i class="fa-solid fa-file-pdf"></i> Explore os primeiros capítulos aqui
+                <a href="a-garota-que-nao-sabia-chorar.pdf" target="_blank" class="action-btn">
+                    <i class="fa-solid fa-file-pdf"></i> Ler primeiros capítulos
                 </a>
             </div>
         </div>
