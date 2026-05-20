@@ -16,11 +16,11 @@
             --bg-2:         #0a142b;       
             --bg-3:         #0D1E40;       
             --accent:       #F2C879;       
-            --accent-blue:  #368DD9;
+            --accent-dim:   rgba(242, 200, 121, 0.15);
             --text:         #F2D8A7;       
             --text-muted:   rgba(242, 216, 167, 0.65);
-            --text-dim:     rgba(242, 216, 167, 0.15);
-            --border:       rgba(242, 216, 167, 0.1);
+            --text-dim:     rgba(242, 216, 167, 0.25);
+            --border:       rgba(242, 216, 167, 0.15);
         }
 
         body {
@@ -32,7 +32,8 @@
         }
 
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        
+        a { text-decoration: none; color: inherit; }
+
         /* NAV SIMPLIFICADA */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 200;
@@ -42,155 +43,141 @@
             backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--border);
         }
-        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; text-decoration: none; color: inherit; text-transform: uppercase; }
+        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; }
+        .nav-logo span { color: var(--accent); }
         .back-link {
             font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em;
-            text-transform: uppercase; color: var(--text-muted); text-decoration: none;
-            transition: 0.3s; display: flex; align-items: center; gap: 8px;
+            text-transform: uppercase; color: var(--text-muted); transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
         }
         .back-link:hover { color: var(--accent); }
 
         /* HERO AREA */
         header {
             padding: 12rem 5rem 4rem 5rem;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
-            align-items: end;
+            display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: end;
+            border-bottom: 1px solid var(--border);
         }
-        
         .hero-title h1 {
-            font-size: clamp(4rem, 8vw, 8rem);
-            line-height: 0.85;
-            text-transform: uppercase;
-            font-weight: 900;
+            font-size: clamp(4rem, 8vw, 8rem); line-height: 0.85;
+            text-transform: uppercase; font-weight: 900; margin-bottom: 1rem;
         }
         .hero-title h1 span {
-            display: block;
-            font-style: italic;
-            font-weight: 400;
-            color: transparent;
-            -webkit-text-stroke: 1px var(--accent);
+            display: block; font-style: italic; font-weight: 400;
+            color: transparent; -webkit-text-stroke: 1px var(--accent);
         }
-
         .hero-info {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-            border-left: 1px solid var(--accent);
-            padding-left: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem; line-height: 1.6; color: var(--text-muted);
+            border-left: 1px solid var(--accent); padding-left: 2rem; margin-bottom: 2rem;
         }
 
-        /* GALERIA ASSIMÉTRICA */
-        .gallery-container {
-            padding: 4rem 5rem 8rem 5rem;
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
+        /* SECÇÃO: O ENSAIO (Texto + Carrossel) */
+        .essay-section { padding: 8rem 5rem; }
+        .essay-grid {
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: center;
         }
+        .sec-label {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 2rem;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .sec-label::before { content: ''; width: 40px; height: 1px; background: var(--accent); }
+        
+        .essay-text h2 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 1.5rem; color: var(--text); }
+        .essay-text p { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 1.5rem; font-weight: 300; }
+        .essay-text p strong { color: var(--accent); font-weight: 400; }
 
-        .item {
-            background: var(--bg-3);
-            border: 1px solid var(--border);
+        /* ESTILOS DO CARROSSEL DE CROQUIS */
+        .carousel-wrapper {
             position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: 0.4s ease-in-out;
-        }
-        .item:hover { border-color: var(--accent); transform: translateY(-5px); }
-
-        /* Estilos de proporção para a grade editorial */
-        .w-6 { grid-column: span 6; }
-        .w-4 { grid-column: span 4; }
-        .w-8 { grid-column: span 8; }
-        .h-large { aspect-ratio: 1/1.2; }
-        .h-medium { aspect-ratio: 1.5/1; }
-
-        .item-image {
             width: 100%;
+            aspect-ratio: 4/5;
+            border: 1px solid var(--border);
+            background: var(--bg-3);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .carousel-track {
+            display: flex;
             height: 100%;
-            background: linear-gradient(45deg, var(--bg-2), var(--bg-3));
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
-        .item-image i {
-            font-size: 3rem;
-            color: var(--text-dim);
-            transition: 0.5s;
+        /* Imagem do Croqui */
+        .carousel-slide img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(20%); opacity: 0.9;
         }
-        .item:hover .item-image i { color: var(--accent); transform: scale(1.2); }
-
-        /* Para quando você adicionar suas próprias imagens */
-        .item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            transition: 0.5s ease;
-            filter: grayscale(30%);
-        }
-        .item:hover .item-image img { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
-
-        .item-overlay {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 1.5rem;
-            background: linear-gradient(to top, rgba(7, 15, 32, 0.95), transparent);
-        }
-        .item-overlay span {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: var(--accent);
-            letter-spacing: 0.15em;
-        }
-        .item-overlay h3 {
-            font-size: 1.4rem;
-            margin-top: 5px;
-            line-height: 1.2;
+        /* Placeholder quando não há imagem */
+        .slide-placeholder {
+            font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--text-dim);
+            text-align: center; border: 1px dashed var(--text-dim); padding: 2rem; width: 80%; height: 80%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
         }
 
-        /* SECTION HOOK: ESTÉTICA E CRO */
-        .logic-section {
-            padding: 8rem 5rem;
-            background: var(--accent);
-            color: var(--bg);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6rem;
-            align-items: center;
+        /* Botões do Carrossel */
+        .carousel-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(7, 15, 32, 0.7); color: var(--accent);
+            border: 1px solid var(--accent-dim); width: 45px; height: 45px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px); transition: 0.3s; z-index: 10;
         }
-        .logic-content h2 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            color: var(--bg);
+        .carousel-btn:hover { background: var(--accent); color: var(--bg); }
+        .btn-prev { left: 15px; }
+        .btn-next { right: 15px; }
+        
+        .carousel-indicators {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 10;
         }
-        .logic-content p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            opacity: 0.85;
-            margin-bottom: 1.5rem;
+        .indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); cursor: pointer; transition: 0.3s; }
+        .indicator.active { background: var(--accent); transform: scale(1.3); }
+
+        /* SECÇÃO: DESCONSTRUÇÃO VISUAL (TEAR-DOWN) */
+        .deconstruction-section { background: var(--bg-2); padding: 8rem 5rem; border-top: 1px solid var(--border); }
+        .deconstruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        
+        .dec-image {
+            position: relative;
+            padding: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-3);
         }
-        .logic-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .dec-image img { width: 100%; height: auto; display: block; filter: grayscale(100%); transition: 0.5s; }
+        .dec-image:hover img { filter: grayscale(0%); }
+        
+        /* Pontos de Análise na Imagem */
+        .hotspot {
+            position: absolute; width: 24px; height: 24px; background: var(--accent); color: var(--bg);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: bold;
+            box-shadow: 0 0 0 4px rgba(242, 200, 121, 0.3); cursor: help;
         }
-        .stat-box {
-            border: 1px solid rgba(7, 15, 32, 0.2);
-            padding: 2rem;
-            text-align: center;
-            background: rgba(7, 15, 32, 0.03);
-            transition: background 0.3s;
-        }
+        .hs-1 { top: 20%; left: 30%; }
+        .hs-2 { bottom: 30%; right: 25%; }
+        
+        .dec-content h3 { font-size: 2.2rem; color: var(--text); margin-bottom: 2rem; }
+        .dec-point { margin-bottom: 2rem; padding-left: 1.5rem; border-left: 2px solid var(--accent-dim); }
+        .dec-point h4 { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
+        .dec-point p { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); font-weight: 300; }
+
+        /* SECTION HOOK: O MÉTODO */
+        .logic-section { padding: 6rem 5rem; background: var(--accent); color: var(--bg); display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .logic-section h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 3rem; color: var(--bg); max-width: 800px; }
+        
+        .logic-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; width: 100%; max-width: 1000px; }
+        .stat-box { border: 1px solid rgba(7, 15, 32, 0.2); padding: 2rem 1rem; background: rgba(7, 15, 32, 0.03); transition: background 0.3s; }
         .stat-box:hover { background: rgba(7, 15, 32, 0.08); }
-        .stat-box h4 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 10px; font-style: italic; color: var(--bg); }
-        .stat-box p { font-family: 'DM Mono', monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--bg); opacity: 0.8; }
+        .stat-box h4 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px; font-style: italic; color: var(--bg); }
+        .stat-box p { font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; color: var(--bg); opacity: 0.8; }
 
         footer { text-align: center; padding: 4rem; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.2em; }
 
@@ -198,16 +185,17 @@
         @media (max-width: 1024px) {
             header { grid-template-columns: 1fr; padding-top: 10rem; }
             .hero-info { border-left: none; border-top: 1px solid var(--accent); padding-left: 0; padding-top: 2rem; }
-            .gallery-container { grid-template-columns: repeat(2, 1fr); }
-            .w-6, .w-4, .w-8 { grid-column: span 1; }
-            .logic-section { grid-template-columns: 1fr; gap: 3rem; }
+            .essay-grid, .deconstruction-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .carousel-wrapper { aspect-ratio: 16/9; max-height: 500px; }
         }
 
         @media (max-width: 768px) {
-            header, .gallery-container, .logic-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+            header, .essay-section, .deconstruction-section, .logic-section { padding-left: 1.5rem; padding-right: 1.5rem; }
             .hero-title h1 { font-size: 4rem; }
-            .gallery-container { grid-template-columns: 1fr; }
-            .logic-content h2 { font-size: 2.5rem; }
+            .logic-stats { grid-template-columns: 1fr 1fr; }
+            .dec-content h3 { font-size: 1.8rem; }
+        }
+        @media (max-width: 480px) {
             .logic-stats { grid-template-columns: 1fr; }
         }
     </style>
@@ -224,86 +212,108 @@
             <h1>Estúdio<span>Visual</span></h1>
         </div>
         <div class="hero-info">
-            Para mim, a beleza é uma métrica de retenção. Onde outros veem apenas imagens, eu vejo proporção, psicologia das cores e hierarquia de informação. <strong>Meu processo começa longe das telas. O olhar apurado para a moda e as artes é o que me permite desenhar a estrutura de experiências que convertem.</strong>
+            Meu processo começa longe das telas. <strong>Acredito que entender de moda, desenho e arte não é um hobby, é um diferencial competitivo.</strong> É esse repertório que me permite desenhar a arquitetura de experiências digitais que retêm a atenção e convertem de verdade.
         </div>
     </header>
 
-    <main class="gallery-container">
-        
-        <div class="item w-8 h-large">
-            <div class="item-image">
-                <i class="fa-solid fa-pencil"></i>
-                </div>
-            <div class="item-overlay">
-                <span>Fundamentos Analógicos</span>
-                <h3>O Croqui & A Estrutura</h3>
+    <section class="essay-section">
+        <div class="essay-grid">
+            <div class="essay-text">
+                <div class="sec-label">Fundamentos Analógicos</div>
+                <h2>O Croqui & A Arquitetura</h2>
+                <p>Tudo começa no papel. Um croqui de moda define a estrutura, a proporção e o caimento antes de qualquer tecido ser cortado.</p>
+                <p>No marketing e em projetos de SEO, aplico rigorosamente o mesmo princípio. Antes de escrever uma linha de copy ou abrir o WordPress, eu <strong>desenho a arquitetura da informação</strong>. Mapeio a jornada do usuário, o espaço de respiro (whitespace) e a hierarquia visual.</p>
+                <p>O lápis e o papel me permitem errar rápido e estruturar a narrativa visual de forma humana, focada em guiar o olhar sem gerar sobrecarga cognitiva. <strong>Wireframes não são códigos, são desenhos de comportamento.</strong></p>
             </div>
-        </div>
 
-        <div class="item w-4 h-large">
-            <div class="item-image">
-                <i class="fa-solid fa-gem"></i>
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="track">
+                    <div class="carousel-slide">
+                        <div class="slide-placeholder"><i class="fa-solid fa-pencil" style="font-size: 2rem;"></i> Croqui / Esboço 01<br>(Insira sua imagem aqui)</div>
+                        </div>
+                    <div class="carousel-slide">
+                        <div class="slide-placeholder"><i class="fa-solid fa-pen-ruler" style="font-size: 2rem;"></i> Croqui / Esboço 02<br>(Insira sua imagem aqui)</div>
+                        </div>
+                    <div class="carousel-slide">
+                        <div class="slide-placeholder"><i class="fa-solid fa-book-open" style="font-size: 2rem;"></i> Croqui / Esboço 03<br>(Insira sua imagem aqui)</div>
+                        </div>
                 </div>
-            <div class="item-overlay">
-                <span>Neuromarketing Visual</span>
-                <h3>Curadoria de Desejo</h3>
-            </div>
-        </div>
 
-        <div class="item w-4 h-medium">
-            <div class="item-image">
-                <i class="fa-solid fa-sitemap"></i>
-                </div>
-            <div class="item-overlay">
-                <span>Arquitetura da Informação</span>
-                <h3>Esqueleto de Conversão</h3>
-            </div>
-        </div>
+                <button class="carousel-btn btn-prev" id="btnPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="carousel-btn btn-next" id="btnNext"><i class="fa-solid fa-chevron-right"></i></button>
 
-        <div class="item w-8 h-medium">
-            <div class="item-image">
-                <i class="fa-solid fa-magnifying-glass-chart"></i>
+                <div class="carousel-indicators" id="indicators">
+                    <div class="indicator active" data-index="0"></div>
+                    <div class="indicator" data-index="1"></div>
+                    <div class="indicator" data-index="2"></div>
                 </div>
-            <div class="item-overlay">
-                <span>Visão Crítica</span>
-                <h3>Auditoria Visual (Tear-down)</h3>
             </div>
         </div>
-    </main>
+    </section>
+
+    <section class="deconstruction-section">
+        <div class="sec-label" style="justify-content: center; margin-bottom: 4rem;">Auditoria Visual</div>
+        <div class="deconstruction-grid">
+            
+            <div class="dec-image">
+                <img src="fundo-moda.jpg" alt="Análise Estética de Moda">
+                
+                <div class="hotspot hs-1">1</div>
+                <div class="hotspot hs-2">2</div>
+            </div>
+
+            <div class="dec-content">
+                <h3>Como o olhar estético<br>impacta a conversão (CRO)?</h3>
+                
+                <div class="dec-point">
+                    <h4><span class="hotspot" style="position:static; width:20px; height:20px;">1</span> Contraste & Ponto Focal</h4>
+                    <p>Em campanhas de alto padrão, o uso de espaço negativo (vazio) não é desperdício de tela, é uma ferramenta de luxo. No ambiente digital, excesso de informação causa fadiga. Isolar o <em>Call to Action</em> ou o título principal aumenta drasticamente o clique.</p>
+                </div>
+
+                <div class="dec-point">
+                    <h4><span class="hotspot" style="position:static; width:20px; height:20px;">2</span> Psicologia das Cores & Retenção</h4>
+                    <p>Tons terrosos ou neutros passam confiança, enquanto pontos de cor vibrante geram senso de urgência. Entender a teoria cromática aplicada na moda me ajuda a construir Landing Pages e Artigos que prendem o leitor até o final do funil, diminuindo o <em>Bounce Rate</em>.</p>
+                </div>
+                
+                <div class="dec-point" style="border-left-color: transparent;">
+                    <p style="color: var(--accent); font-style: italic;">
+                        "Analisar por que uma vitrine ou um editorial de revista chama a sua atenção é o primeiro passo para criar uma página na web que realmente vende."
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
 
     <section class="logic-section">
-        <div class="logic-content">
-            <h2>A estética a serviço da conversão.</h2>
-            <p>Não acredito em design apenas "bonito" ou em templates engessados. Acredito que a verdadeira conversão começa no papel.</p>
-            <p>A moda me ensinou sobre proporção e respiro visual. Marcas de alto padrão não vendem apenas produtos, vendem status através do espaço negativo e do contraste. Trago esse rigor analógico para o marketing: desenho a jornada do usuário e a arquitetura da informação antes de qualquer linha de código. O resultado são páginas que não cansam a mente e guiam o clique naturalmente.</p>
-        </div>
+        <h2>A estética é a linguagem secreta da conversão.</h2>
         
         <div class="logic-stats">
             <div class="stat-box">
                 <h4>Papel</h4>
-                <p>Planejamento Tátil</p>
+                <p>Wireframes e Rascunhos</p>
             </div>
             <div class="stat-box">
-                <h4>Moda</h4>
-                <p>Proporção & Contraste</p>
+                <h4>Curadoria</h4>
+                <p>Referências de Alta Costura e Arte</p>
             </div>
             <div class="stat-box">
-                <h4>UX</h4>
-                <p>Carga Cognitiva Reduzida</p>
+                <h4>Neuromarketing</h4>
+                <p>Entendimento Cognitivo Visual</p>
             </div>
             <div class="stat-box">
-                <h4>SEO</h4>
-                <p>Estrutura focada em ROI</p>
+                <h4>Digital</h4>
+                <p>Aplicação em CRO e Estrutura SEO</p>
             </div>
         </div>
     </section>
 
     <footer>
-        &copy; 2026 Estúdio Janiel Bruno. Curadoria & Performance.
+        &copy; 2026 Estúdio Janiel Bruno. Curadoria, Arte & Performance.
     </footer>
 
     <script>
-        // Efeito de entrada suave
+        // --- ANIMAÇÃO DE FADE AO ROLAR ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -313,11 +323,48 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.item, .logic-content, .stat-box').forEach(el => {
+        document.querySelectorAll('.essay-grid, .deconstruction-grid, .stat-box').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
             observer.observe(el);
+        });
+
+
+        // --- CARROSSEL JAVASCRIPT PURO ---
+        const track = document.getElementById('track');
+        const slides = Array.from(track.children);
+        const btnNext = document.getElementById('btnNext');
+        const btnPrev = document.getElementById('btnPrev');
+        const indicators = Array.from(document.querySelectorAll('.indicator'));
+        
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            // Move a trilha (track) para a esquerda baseado no index
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            
+            // Atualiza as bolinhas indicadoras
+            indicators.forEach((ind, index) => {
+                ind.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        btnNext.addEventListener('click', () => {
+            currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+            updateCarousel();
+        });
+
+        btnPrev.addEventListener('click', () => {
+            currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+            updateCarousel();
+        });
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
         });
     </script>
 </body>
